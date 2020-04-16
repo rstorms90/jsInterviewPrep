@@ -38,6 +38,55 @@ with its own custom data.
 
 ## Polymorphism
 
+Basically, it is the act of redefining a method inside a derived child class of a parent.
+
+```
+class Animal {
+  constructor (name) {
+    this.name = name;
+  }
+
+  makeSound() {
+    console.log("Generic animal sound!");
+  }
+}
+
+class Dog extends Animal {
+  constructor(name) {
+    super(name) //Call constructor of parent
+  }
+
+  makeSound() {
+    console.log("Woof! Woof!")
+  }
+}
+
+const a1 = new Animal("Dom");
+const a2 = new Dog("Jeff");
+
+a1.makeSound(); //"Generic animal sound!"
+a2.makeSound(); //"Woof! Woof!"
+```
+
+#### So, what is happening here?
+
+`const a2` is checking on the Dog class if it has the `makeSound()` method and overrides the value. If it doesn't, then it checks the parent class and uses that method. This is polymorphism.
+
+You can also call the parent method inside the derived method:
+
+```
+class Dog extends Animal {
+  constructor(name) {
+    super(name) //Call constructor of parent
+  }
+
+  makeSound() {
+    super.makeSound(); //"Generic animal sound!"
+    console.log("Woof! Woof!")
+  }
+}
+```
+
 ```
 class Particle {
 
