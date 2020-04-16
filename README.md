@@ -211,3 +211,46 @@ When you click on a button, the event passes from inner event target to Document
 5. `Document`
 
 `event.stopPropagation()` will stop event bubbling from occurring.
+
+## Event Delegation
+
+```
+const character = document.getElementById("disney-character");
+character.addEventListener('click', showCharactersName);
+```
+
+In our code above, on page load, the event listener finds an HTML element with the id disney-character and sets a click event listener on that HTML element.
+This works fine if the element exists on the page when the page is loaded. However what happens to the event listener when the element is added to the DOM (webpage) after the initial page load?
+
+The whole idea behind event delegation is that instead of listening for a change on the inputs directly, we should look for an HTML element that is going to be on the page when the page initially loads.
+
+```
+<ul class=”characters”>
+</ul>
+<script>
+  function toggleDone (event) {
+    console.log(event.target)
+  }
+  const characterList = document.querySelector('.characters')
+  characterList.addEventListener('click', toggleDone)
+</script>
+```
+
+The event.currentTarget identifies the current target for the event, as the event traverses the DOM. It always refers to the element to which the event listener has been attached. In our case the event listener was attached to the unordered list, characters, so that is what we see in our console.
+
+#### Writing Event Delegation in JavaScript
+
+Because we now know that the EVENT.TARGET identifies the HTML elements on which the event occurred, and we also know what element we want to listen for (the input element), solving this in JavaScript is relatively easy.
+
+```
+//Event Delegation
+function toggleDone (event) {
+  if (!event.target.matches(‘input’)) return
+  console.log(event.target)
+  //We now have the correct input - we can manipulate the node here
+}
+```
+
+Basically the code above states, if the event target that was clicked DOES NOT match the input element, exit the function.
+If the event target that was clicked DOES match the input element, console.log the event.target and execute subsequent JavaScript code on that child node.
+This is important, now we can be confident that a user clicked the correct child node, even though the inputs were added to the DOM after the initial page load.
