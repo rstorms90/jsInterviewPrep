@@ -70,4 +70,29 @@ The main difference, roughly speaking, between a strongly typed language and a w
 - Coupling is a degree to which a component / module is connected to the other modules.
 - While designing you should strive for low coupling i.e. dependency between modules should be less
 - Making private fields, private methods and non public classes provides loose coupling.
-- Coupling is Inter -Module Concept.
+- Coupling is Inter-Module Concept.
+
+## Hoisting
+
+JavaScript only hoists declarations, not initializations.
+
+Example 1 gives same result as Example 2:
+
+```
+x = 5; // Assign 5 to x
+
+elem = document.getElementById("demo"); // Find an element
+elem.innerHTML = x;                     // Display x in the element
+
+var x; // Declare x
+```
+
+```
+var x; // Declare x
+x = 5; // Assign 5 to x
+
+elem = document.getElementById("demo"); // Find an element
+elem.innerHTML = x;                     // Display x in the element
+```
+
+`let` & `const` are not hoisted
