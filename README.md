@@ -127,8 +127,8 @@ me.thisInRegular();
 
 ### Using `new` keyword
 
-Regular functions created using function declarations or expressions are constructible and callable. Since regular functions are constructible, they can be called using the new keyword.
-However, the arrow functions are only callable and not constructible, i.e arrow functions can never be used as constructor functions. Hence, they can never be invoked with the new keyword
+Regular functions created using function declarations or expressions are constructible and callable. Since regular functions are constructible, they can be called using the `new` keyword.
+However, the arrow functions are only callable and not constructible, i.e arrow functions can never be used as constructor functions. Hence, they can never be invoked with the `new` keyword
 
 ```
 let add = (x, y) => console.log(x + y);
@@ -137,4 +137,81 @@ new add(2,3);
 
 Above will throw: `Uncaught TypeError: add is not a constructor at...`
 
-## Difference between let & var
+## Difference between `let` & `var`
+
+Main difference is scoping rules. Variables declared by var keyword are scoped to the immediate function body (hence the function scope) while let variables are scoped to the immediate enclosing block denoted by { } (hence the block scope).
+
+```
+function run() {
+  var foo = "Foo";
+  let bar = "Bar";
+
+  console.log(foo, bar);
+
+  {
+    let baz = "Bazz";
+    console.log(baz);
+  }
+
+  console.log(baz); // ReferenceError
+}
+
+run();
+```
+
+## Is a `const` variable immutable?
+
+The const declaration creates a read-only reference to a value. It does not mean the value it holds is immutable, just that the variable identifier cannot be reassigned.
+
+## Functional Programming & Currying
+
+This function takes three numbers, multiplies the numbers and returns the result.
+
+```
+function multiply(a, b, c) {
+    return a * b * c;
+}
+multiply(1,2,3); // 6
+```
+
+See, how we called the multiply function with the arguments in full. Let’s create a curried version of the function and see how we would call the same function (and get the same result) in a series of calls:
+
+```
+function multiply(a) {
+    return (b) => {
+        return (c) => {
+            return a * b * c
+        }
+    }
+}
+log(multiply(1)(2)(3)) // 6
+```
+
+We could separate this multiply(1)(2)(3) to understand it better:
+
+```
+const mul1 = multiply(1);
+const mul2 = mul1(2);
+const result = mul2(3);
+log(result); // 6
+```
+
+## Closure
+
+A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives you access to an outer function’s scope from an inner function. In JavaScript, closures are created every time a function is created, at function creation time.
+
+## Event Bubbling
+
+When you click on a button, the event passes from inner event target to Document. Click event pass in the following order:
+
+5. `Document`
+   ^^^
+6. `HTML`
+   ^^^
+7. `body`
+   ^^^
+8. `div`
+   ^^^
+9. `button`
+
+`event.stopPropagation()` will stop event bubbling from occurring.
