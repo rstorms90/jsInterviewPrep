@@ -336,7 +336,7 @@ get('supplyData.json').then(function(response) {
 })
 ```
 
-Lets dive deep into chaining.
+Dive deep into chaining.
 
 ```
 new Promise(function(resolve, reject) {
