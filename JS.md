@@ -195,3 +195,33 @@ const mul2 = mul1(2);
 const result = mul2(3);
 log(result); // 6
 ```
+
+## What does `bind()` do?
+
+The bind() method creates a new function that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.
+
+```
+var Button = function(content) {
+  this.content = content;
+};
+Button.prototype.click = function() {
+  console.log(this.content + ' clicked');
+}
+
+var myButton = new Button('OK');
+myButton.click();
+
+var looseClick = myButton.click;
+looseClick(); // not bound, 'this' is not myButton - it is the global object
+
+var boundClick = myButton.click.bind(myButton);
+boundClick(); // bound, 'this' is myButton
+```
+
+Response:
+
+```
+OK clicked
+undefined clicked
+OK clicked
+```
