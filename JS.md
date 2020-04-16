@@ -1,22 +1,5 @@
 # JS Interview Prep
 
-## What is Type Safety?
-
-Type safety means that the compiler will validate types while compiling, and throw an error if you try to assign the wrong type to a variable.
-
-## What's the difference between strongly types and weakly typed languages?
-
-The main difference, roughly speaking, between a strongly typed language and a weakly typed one is that a weakly typed one makes conversions between unrelated types implicitly, while a strongly typed one typically disallows implicit conversions between unrelated types
-
-## What is software coupling?
-
-- Coupling is the indication of the relationships between modules.
-- Coupling shows the relative dependence/interdependence among the modules.
-- Coupling is a degree to which a component / module is connected to the other modules.
-- While designing you should strive for low coupling i.e. dependency between modules should be less
-- Making private fields, private methods and non public classes provides loose coupling.
-- Coupling is Inter-Module Concept.
-
 ## Hoisting
 
 JavaScript only hoists declarations, not initializations.
@@ -108,39 +91,6 @@ run();
 
 The const declaration creates a read-only reference to a value. It does not mean the value it holds is immutable, just that the variable identifier cannot be reassigned.
 
-## Functional Programming & Currying
-
-This function takes three numbers, multiplies the numbers and returns the result.
-
-```
-function multiply(a, b, c) {
-    return a * b * c;
-}
-multiply(1,2,3); // 6
-```
-
-See, how we called the multiply function with the arguments in full. Let’s create a curried version of the function and see how we would call the same function (and get the same result) in a series of calls:
-
-```
-function multiply(a) {
-    return (b) => {
-        return (c) => {
-            return a * b * c
-        }
-    }
-}
-log(multiply(1)(2)(3)) // 6
-```
-
-We could separate this multiply(1)(2)(3) to understand it better:
-
-```
-const mul1 = multiply(1);
-const mul2 = mul1(2);
-const result = mul2(3);
-log(result); // 6
-```
-
 ## Event Bubbling
 
 When you click on a button, the event passes from inner event target to Document. Click event pass in the following order:
@@ -195,3 +145,53 @@ function toggleDone (event) {
 Basically the code above states, if the event target that was clicked DOES NOT match the input element, exit the function.
 If the event target that was clicked DOES match the input element, console.log the event.target and execute subsequent JavaScript code on that child node.
 This is important, now we can be confident that a user clicked the correct child node, even though the inputs were added to the DOM after the initial page load.
+
+## What is Type Safety?
+
+Type safety means that the compiler will validate types while compiling, and throw an error if you try to assign the wrong type to a variable.
+
+## What's the difference between strongly types and weakly typed languages?
+
+The main difference, roughly speaking, between a strongly typed language and a weakly typed one is that a weakly typed one makes conversions between unrelated types implicitly, while a strongly typed one typically disallows implicit conversions between unrelated types
+
+## What is software coupling?
+
+- Coupling is the indication of the relationships between modules.
+- Coupling shows the relative dependence/interdependence among the modules.
+- Coupling is a degree to which a component / module is connected to the other modules.
+- While designing you should strive for low coupling i.e. dependency between modules should be less
+- Making private fields, private methods and non public classes provides loose coupling.
+- Coupling is Inter-Module Concept.
+
+## Functional Programming & Currying
+
+This function takes three numbers, multiplies the numbers and returns the result.
+
+```
+function multiply(a, b, c) {
+    return a * b * c;
+}
+multiply(1,2,3); // 6
+```
+
+See, how we called the multiply function with the arguments in full. Let’s create a curried version of the function and see how we would call the same function (and get the same result) in a series of calls:
+
+```
+function multiply(a) {
+    return (b) => {
+        return (c) => {
+            return a * b * c
+        }
+    }
+}
+log(multiply(1)(2)(3)) // 6
+```
+
+We could separate this multiply(1)(2)(3) to understand it better:
+
+```
+const mul1 = multiply(1);
+const mul2 = mul1(2);
+const result = mul2(3);
+log(result); // 6
+```
