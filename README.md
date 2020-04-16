@@ -200,6 +200,89 @@ log(result); // 6
 
 A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives you access to an outer function’s scope from an inner function. In JavaScript, closures are created every time a function is created, at function creation time.
 
+```
+var outerNumber = 30
+function outer() {
+  var innerNumber = 20
+function inner() {
+  return outerNumber + innerNumber
+}
+return inner()
+}
+outer() //prints 50
+```
+
+Here the function inner is considered a closure. That’s it.
+
+Closure in ES6:
+
+```
+const outer = () => {
+  let i = 0;
+return () => {
+    return i++;
+  }
+}
+let increment = outer();
+increment() //prints 0
+increment() //prints 1
+```
+
+#### Why is this important?
+
+```
+var outerNumber = 30
+function outer() {
+  var innerNumber = 20
+function inner() {
+  return outerNumber + innerNumber
+}
+return inner()
+}
+outer() //prints 50
+```
+
+What is unique is that the inner function inner has access to variables in outer function, outer's scope, which in our case is the variable outerNumber.
+Having said that, an important facet of a closure is that the inner function still has access to the outer function variables even after the outer function has returned.
+
+#### What in tarnation does that mean?
+
+```
+function fullName(firstName) {
+  const intro = 'Hello'
+
+  function combineNames(lastName) {
+    return `${intro} ${firstName} ${lastName}!`
+  }
+  return combineNames
+}
+const russFullName = fullName('Russ')
+russFullName(); //prints `Hello Russ undefined!
+russFullName('Doucette'); //prints `Hello Russ Storms!`
+```
+
+In our case the inner function is combineNames. It still has access to the outer function variables, `firstName === 'Russ'`, despite the fact that fullName, the outer function has been called and returned.
+So when I wrote in my console `const russFullName = fullName('Russ')`, the russFullName variable nows contains the inner function combineNames, and a reference to the variables of the outer function, firstName.
+Therefore when I call russFullName() I see back the following text:
+Hello Russ undefined!
+
+RECAP: The VARIABLE russFullName now contains a reference to the following 3 things:
+
+- Variable of the outer function intro === 'Hello'
+- Variable of the outer function firstName === 'Russ'
+- The inner function combineNames
+
+Continuing on… now when we call russFullName('Storms') the following will print out:
+Hello Russ Storms.
+
+So we call russFullName with the string Storms, it passes the the string Storms as a parameter to the inner function.
+As stated above, the inner function ALSO has access to the variables of the outer function intro == 'Hello'& firstName === 'Russ' despite the fact that the outer function fullName has already been called and returned.
+Having everything the inner function needs, the inner function executes its code:
+return `${intro} ${firstName} ${lastName}!`;
+AND the result is:
+Hello Russ Storms!
+Boom!
+
 ## Event Bubbling
 
 When you click on a button, the event passes from inner event target to Document. Click event pass in the following order:
