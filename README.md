@@ -96,3 +96,45 @@ elem.innerHTML = x;                     // Display x in the element
 ```
 
 `let` & `const` are not hoisted
+
+## Difference between Arrow functions & Regular functions
+
+### Arguments Binding
+
+Arrow functions do not have an arguments binding. However, they have access to the arguments object of the closest
+non-arrow parent function. Named and rest parameters are heavily relied upon to capture the arguments passed to
+arrow functions.
+
+### Use of `this` keyword
+
+Unlike regular functions, arrow functions do not have their own `this`. The value of `this` inside an arrow function
+remains the same throughout the lifecycle of the function and is always bound to the value of `this` in the closest
+non-arrow parent function.
+
+```
+let me = {
+ name: "Ashutosh Verma",
+ thisInArrow:() => {
+ console.log("My name is " + this.name); // no 'this' binding here
+ },
+ thisInRegular(){
+ console.log("My name is " + this.name); // 'this' binding works here
+ }
+};
+me.thisInArrow();
+me.thisInRegular();
+```
+
+### Using `new` keyword
+
+Regular functions created using function declarations or expressions are constructible and callable. Since regular functions are constructible, they can be called using the new keyword.
+However, the arrow functions are only callable and not constructible, i.e arrow functions can never be used as constructor functions. Hence, they can never be invoked with the new keyword
+
+```
+let add = (x, y) => console.log(x + y);
+new add(2,3);
+```
+
+Above will throw: `Uncaught TypeError: add is not a constructor at...`
+
+## Difference between let & var
