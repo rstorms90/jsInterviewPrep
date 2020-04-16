@@ -225,3 +225,143 @@ OK clicked
 undefined clicked
 OK clicked
 ```
+
+## What is the difference between a promise and a callback?
+
+Promises are cleaner way for running asynchronous tasks to look more like synchronous and also provide catching mechanism which are not in callbacks. Promises are built over callbacks. Promises are a very mighty abstraction, allow cleaner and better, functional code with less error-prone boilerplate. I would recommend to get the flow of how stuff works and think in terms of promises way.
+
+#### Callbacks
+
+```
+function myFetchData(url, callback) {
+  makeNetworkCall( url, (response) => {
+    if (response.success) {
+      callback(response.data, nil)
+    } else {
+      callback(nil, response.error)
+    }
+  });
+}
+/* Imagine makeNetworkCall makes a get call to the url which it accepts as the first param. On executing the call, it fills its response in the second argument it takes */
+let url = "https://jsonplaceholder.typicode.com/todos/1";
+myFetchData(url, function(data, error) {
+  if (error != nil) {
+    console.log("data", data)
+  } else {
+    console.log("error", error)
+  }
+});
+```
+
+We would do the above same task with promise below.
+
+#### Promises
+
+```
+let myFetchData = (url) => {
+  return new Promise((resolve, reject) => {
+    makeNetworkCall( url , (response) => {
+      if (response.success) {
+        resolve(response.data)
+      } else {
+        reject(response.error)
+      }
+    });
+  })
+}
+/* Imagine makeNetworkCall makes a get call to the url which it accepts as the first param. On executing the call, it fills its response in the second argument it takes */
+let url = "https://jsonplaceholder.typicode.com/todos/1";
+myFetchData(url)
+  .then(data) {
+    console.log("data", data)
+  }
+  .catch(error) {
+    console.log("error", error)
+  }
+```
+
+```
+// Here's how you create a promise:
+var promise = new Promise(function(resolve, reject) {
+  // do a thing, possibly async, then…
+
+  if (/* everything turned out fine */) {
+    resolve("Stuff worked!");
+  }
+  else {
+    reject(Error("It broke"));
+  }
+});
+```
+
+The promise constructor takes one argument, a callback with two parameters, resolve and reject. Do something within the callback, perhaps async, then call resolve if everything worked, otherwise call reject.
+Here’s how you use that promise:
+
+```
+promise.then(function(result) {
+  console.log(result); // "Stuff worked!"
+}, function(err) {
+  console.log(err); // Error: "It broke"
+});
+```
+
+What’s ‘.error’ then in promises?
+As we saw earlier, then() takes two arguments, one for success, one for failure (or fulfill and reject, in promises-speak):
+
+```
+get('supplyData.json').then(function(response) {
+  console.log("Success!", response);
+}, function(error) {
+  console.log("Failed!", error);
+})
+```
+
+Now with .catch ()
+
+```
+get('supplyData.json').then(function(response) {
+  console.log("Success!", response);
+}).catch(function(error) {
+  console.log("Failed!", error);
+})
+```
+
+There’s nothing special about catch(), it's just sugar for then(undefined, func), but it's more readable. Note that the two code examples above do not behave the same, the latter is equivalent to:
+
+```
+get('supplyData.json').then(function(response) {
+  console.log("Success!", response);
+}).then(undefined, function(error) {
+  console.log("Failed!", error);
+})
+```
+
+Lets dive deep into chaining.
+
+```
+new Promise(function(resolve, reject) {
+  setTimeout(() => resolve(1), 1000); // (Zone 1)
+  })
+  .then(function(result) { // (Zone 2)
+    alert(result); // 1
+    return result * 2;
+  })
+  .then(function(result) { // (Zone 3)
+    alert(result); // 2
+    return result * 2;
+  })
+  .then(function(result) {
+    alert(result); // 4
+    return result * 2;
+});
+```
+
+The whole thing works, because a call to promise.then returns a promise, so that we can call the next .then on it. In Zone 2, the return value 2 is wrapped in Promise and sent further. Thats why we can call .then in Zone 3.
+
+Browsers are pretty good at downloading multiple things at once, so we’re losing performance by downloading supplydata one after the other. What we want to do is download them all at the same time, then process them when they’ve all arrived. Thankfully there’s an API for this:
+
+```
+Promise.all(arrayOfPromises).then(function(arrayOfResults) {
+  //...
+})
+```
