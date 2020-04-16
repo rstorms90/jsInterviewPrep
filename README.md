@@ -204,10 +204,10 @@ A closure is the combination of a function bundled together (enclosed) with refe
 
 When you click on a button, the event passes from inner event target to Document. Click event pass in the following order:
 
+1. `button`
+2. `div`
+3. `body`
+4. `HTML`
 5. `Document`
-6. `HTML`
-7. `body`
-8. `div`
-9. `button`
 
 `event.stopPropagation()` will stop event bubbling from occurring.
