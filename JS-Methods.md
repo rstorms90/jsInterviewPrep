@@ -1,6 +1,6 @@
 ## Filter vs Map vs Reduce vs Foreach (Array Methods)
 
-#### Foreach
+### Foreach
 
 Foreach takes a callback function and run that callback function on each element of array one by one.
 
@@ -24,7 +24,7 @@ output
 For every element on the array we are calling a callback which gets element & its index provided by foreach.
 Basically forEach works as a traditional for loop looping over the array and providing you array elements to do operations on them.
 
-#### Filter
+### Filter
 
 The main difference between forEach and filter is that forEach just loops over the array and executes the callback but filter executes the callback and check its return value. If the value is true element remains in the resulting array but if the return value is false the element will be removed for the resulting array.
 
@@ -46,7 +46,7 @@ var result = sample.filter(elem => elem !== 2)
 
 We passed a callback to filter which got run against every element in the array. In the callback we checked if the element !== 2 if the condition fails ( when elem was equal to 1 or 3 ) include them into the resulting array else don’t include the element in the resulting array.
 
-#### Map
+### Map
 
 Map like filter & foreach takes a callback and run it against every element on the array but what makes it unique is it generates a new array based on your existing array.
 
@@ -67,7 +67,7 @@ console.log(mapped);
 Map ran through every element of the array, multiplied it to 10 and returned the element which will be going to stored inside our resulting array.
 Like filter, map also returns an array. The provided callback to map modifies the array elements and save them into the new array upon completion that array get returned as the mapped array.
 
-#### Reduce
+### Reduce
 
 As the name already suggest reduce method of the array object is used to reduce the array to one single value.
 
