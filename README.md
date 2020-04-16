@@ -283,6 +283,8 @@ AND the result is:
 Hello Russ Storms!
 Boom!
 
+When you have a closure, the inner function, the closure, still has access to the outer function’s variables. It does this by storing references to the outer function’s variables. It does not store the actual value.
+
 ## Event Bubbling
 
 When you click on a button, the event passes from inner event target to Document. Click event pass in the following order:
