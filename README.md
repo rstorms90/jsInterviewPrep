@@ -54,3 +54,20 @@ Confetti c = new Confetti();
 // Allowed because Confetti extends Particle
 Particle c = new Confetti();
 ```
+
+## What is Type Safety?
+
+Type safety means that the compiler will validate types while compiling, and throw an error if you try to assign the wrong type to a variable.
+
+## What's the difference between strongly types and weakly typed languages?
+
+The main difference, roughly speaking, between a strongly typed language and a weakly typed one is that a weakly typed one makes conversions between unrelated types implicitly, while a strongly typed one typically disallows implicit conversions between unrelated types
+
+## What is software coupling?
+
+- Coupling is the indication of the relationships between modules.
+- Coupling shows the relative dependence/interdependence among the modules.
+- Coupling is a degree to which a component / module is connected to the other modules.
+- While designing you should strive for low coupling i.e. dependency between modules should be less
+- Making private fields, private methods and non public classes provides loose coupling.
+- Coupling is Inter -Module Concept.
