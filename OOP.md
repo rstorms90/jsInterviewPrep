@@ -164,7 +164,7 @@ function fullName(firstName) {
 }
 const russFullName = fullName('Russ')
 russFullName(); //prints `Hello Russ undefined!
-russFullName('Doucette'); //prints `Hello Russ Storms!`
+russFullName('Storms'); //prints `Hello Russ Storms!`
 ```
 
 In our case the inner function is combineNames. It still has access to the outer function variables, `firstName === 'Russ'`, despite the fact that fullName, the outer function has been called and returned.
